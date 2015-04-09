@@ -1,0 +1,202 @@
+@import "../sandstone/lib.less";
+
+@font-face {
+  font-family: 'Font Awesome';
+  src: url('/media/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
+       url('/media/fonts/fontawesome-webfont.woff') format('woff'),
+       url('/media/fonts/fontawesome-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+#send-to-device {
+    width: @widthDesktop - (@gridGutterWidth * 2);
+    margin: (@baseLine * 2) auto;
+    background: #f2f2f2;
+    color: #56565a;
+    text-align: center;
+
+    h2 {
+        margin: 0;
+        padding: (@baseLine * 2) @baseLine @baseLine;
+        color: #56565a;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    footer {
+        margin-top: @baseLine;
+        padding: (@baseLine / 2) 0;
+        background: #e1e2e2;
+        .clearfix();
+
+        ul {
+            position: relative;
+
+            li {
+                float: left;
+                width: 50%;
+
+                a {
+                    display: block;
+                    padding: (@baseLine / 2) @baseLine;
+
+                    &.app-store span:before {
+                        font-family: 'Font Awesome', sans-serif;
+                        content: '\f179\00A0';
+                    }
+
+                    &.google-play span:before {
+                        font-family: 'Font Awesome', sans-serif;
+                        content: '\F17b\00A0';
+                    }
+                }
+
+                &:nth-child(2) a {
+                    border-left: 1px dotted #56565a;
+                }
+            }
+        }
+    }
+
+    a {
+        color: #00A0DC;
+        .transition(color .1s ease-in-out);
+
+        &:active,
+        &:hover,
+        &:focus {
+            color: darken(#00A0DC, 5%);
+        }
+    }
+
+    .legal {
+        .font-size(@baseFontSize);
+        max-width: 38em;
+        margin: 0 auto (@baseLine * 2);
+    }
+}
+
+#send-to-device-form {
+    padding: 0 @gridGutterWidth;
+
+    .input {
+        margin: 0 0 @baseLine;
+
+        select {
+            margin-bottom: @baseLine;
+            line-height: 1.5;
+            .font-size(@largeFontSize);
+            .open-sans-light;
+        }
+        label {
+            display: block;
+            margin-bottom: @baseLine / 2;
+            .font-size(@largeFontSize);
+        }
+        input[type="text"] {
+            width: 50%;
+            height: 32px;
+            padding: 5px 10px;
+            .transition(none);
+            .font-size(@largeFontSize);
+        }
+        button[type="submit"] {
+            margin-bottom: 0;
+        }
+    }
+
+    .error-list {
+        margin: @baseLine 0;
+
+        li {
+            background: #c33b32;
+            color: #fff;
+            max-width: 40em;
+            margin: @baseLine auto;
+            padding: .5em;
+            text-align: left;
+            border-radius: 3px;
+        }
+    }
+
+    .email {
+        display: block;
+    }
+
+    .sms {
+        display: none;
+    }
+
+    &.us {
+        .email {
+            display: none;
+        }
+
+        .sms {
+            display: block;
+        }
+    }
+}
+
+@media only screen and (max-width: @breakDesktop) {
+    #send-to-device {
+        width: @widthTablet - (@gridGutterWidth * 2);
+    }
+}
+
+@media only screen and (max-width: @breakTablet) {
+    #send-to-device {
+        width: @widthMobileLandscape - (@gridGutterWidth * 2);
+
+        footer {
+            padding: 0 (@baseLine / 2);
+
+            ul li {
+                float: none;
+                width: 100%;
+
+                a {
+                    padding: @baseLine;
+                }
+
+                &:nth-child(2) a {
+                    border-left: none;
+                    border-top: 1px dotted #56565a;
+                }
+            }
+        }
+    }
+
+    #send-to-device-form {
+
+        .input {
+            input[type="text"] {
+                .border-box();
+                display: block;
+                width: 100%;
+            }
+
+            button[type="submit"] {
+                display: block;
+                width: 100%;
+                margin-top: @baseLine;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: @breakMobileLandscape) {
+    #send-to-device {
+        width: @widthMobile - (@gridGutterWidth * 2);
+    }
+}

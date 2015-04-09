@@ -767,3 +767,77 @@ set share_urls = {
 
 </div>{# --/#fxfamilynav-wrapper --#}
 {%- endmacro %}
+
+{% macro send_to_device(platform) %}
+  {% set ios_link = settings.IOS_APP_STORE_FIREFOX_LINK %}
+  {% set android_link = settings.GOOGLE_PLAY_FIREFOX_LINK %}
+  {% set enabled_locales = settings.SEND_TO_DEVICE_LOCALES %}
+
+  {% if LANG in enabled_locales %}
+    <section id="send-to-device">
+      <h2>{{ _('Send Firefox to your smartphone or tablet') }}</h2>
+      <form id="send-to-device-form">
+        <ul class="error-list hidden">
+          <li class="sms">{{ _('Sorry. This number isn’t valid. Please enter a U.S. phone number.') }}</li>
+          <li class="email">{{ _('Please enter an email address.') }}</li>
+          <li class="platformn">{{ _('Please make a selection before proceeding.') }}</li>
+          <li class="system">{{ _('An error occurred in our system. Please try again later.') }}</li>
+        </ul>
+        <div class="input">
+          {% if platform == 'select' %}
+            <select id="id-platform" autocomplete="off" required>
+              <option value="" selected>{{ _('Select iOS or Android') }}</option>
+              <option value="ios">iOS</option>
+              <option value="android">Android</option>
+            </select>
+          {% elif platform == 'ios' %}
+            <input type="hidden" id="id-platform" value="ios">
+          {% elif platform == 'android' %}
+            <input type="hidden" id="id-platform" value="android">
+          {% else %}
+            <input type="hidden" id="id-platform" value="all">
+          {% endif %}
+          <label id="form-input-label" for="id-input" data-alt="{{ _('Enter your email or 10-digit phone number.') }}">{{ _('Enter your email.') }}</label>
+          <input id="id-input" type="text" data-alt="{{ _('Enter your email or 10-digit phone number.') }}" placeholder="{{ _('Enter your email.') }}" required>
+          <button type="submit" class="button-flat">{{ _('Send') }}</button>
+        </div>
+        <div class="thank-you hidden">
+          <p class="sms">{{ _('Check your device for the email or text message!') }}</p>
+          <p class="email">{{ _('Check your device for the email!') }}</p>
+          <a href="#" role="button">{{ _('Send to another device') }}</a>
+        </div>
+        <p class="legal sms">
+          {{ _('SMS service available to US phone numbers only. SMS &amp; data rates may apply.')}} {{ _('The intended recipient of the email or SMS must have consented.')}} <a href="{{ url('privacy.notices.websites') }}#campaigns" class="more">{{ _('Learn more')}}</a>
+        </p>
+        <p class="legal email">
+          {{ _('The intended recipient of the email must have consented.')}} <a href="{{ url('privacy.notices.websites') }}#campaigns" class="more">{{ _('Learn more')}}</a>
+        </p>
+      </form>
+      <footer>
+        <ul class="{{ platform }}">
+          <li>
+            {# L10n: this <span> adds a presentational icon to the store name #}
+            <a class="app-store more" href="{{ ios_link }}">{{ _('Go to the <span>App Store</span>')}}</a>
+          </li>
+          <li>
+            {# L10n: this <span> adds a presentational icon to the store name #}
+            <a class="google-play more" href="{{ android_link }}">{{ _('Go to <span>Google Play</span>')}}</a>
+          </li>
+        </ul>
+      </footer>
+    </section>
+  {% else %}
+    <section id="link-to-store">
+      <ul>
+        <li>
+          {# L10n: this <span> adds a presentational icon to the store name #}
+          <a class="app-store more" href="{{ ios_link }}">{{ _('Go to the <span>App Store</span>')}}</a>
+        </li>
+        <li>
+          {# L10n: this <span> adds a presentational icon to the store name #}
+          <a class="google-play more" href="{{ android_link }}">{{ _('Go to <span>Google Play</span>')}}</a>
+        </li>
+      </ul>
+    </section>
+  {% endif %}
+{%- endmacro %}
